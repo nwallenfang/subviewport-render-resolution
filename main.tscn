@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://de33po8ouo27b"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_2doib"]
+[ext_resource type="Texture2D" uid="uid://dkx3c2ya86hq6" path="res://icon.svg" id="2_2v6hb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mkq7t"]
+albedo_texture = ExtResource("2_2v6hb")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rq2ns"]
+material = SubResource("StandardMaterial3D_mkq7t")
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yy1aa"]
+
+[sub_resource type="Sky" id="Sky_uogs3"]
+sky_material = SubResource("ProceduralSkyMaterial_yy1aa")
+
+[sub_resource type="Environment" id="Environment_fdxdn"]
+background_mode = 2
+sky = SubResource("Sky_uogs3")
+ambient_light_color = Color(1, 1, 1, 1)
+
+[node name="RootControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2doib")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(1152, 648)
+
+[node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 0.984491, 0.175435, 0, -0.175435, 0.984491, 0, 0.786673, 1.77503)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/World"]
+mesh = SubResource("BoxMesh_rq2ns")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
+environment = SubResource("Environment_fdxdn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 0.874713, 0.484642, 0, -0.484642, 0.874713, 0, 1.5038, 0)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
